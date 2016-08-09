@@ -1,0 +1,48 @@
+<header>
+  <h1>The Music Wall</h1>
+</header>
+<% if @song && @song.errors.any? %>
+  <div>
+    <strong>Some errors with your entry. Please fix them.</strong>
+    <ul>
+      <% @song.errors.full_messages.each do |err_message| %>
+      <li><%= err_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<div>
+  <form method="post" action='/songs'>
+    <div>
+      <label for='author'>Author:</label>
+      <input type='text' id='author' name='author' placeholder='Reuired' value='<%= @song.author %>'>
+    </div>
+    <div>
+      <label for='title'>Title:</label>
+      <input type='text' id='title' name='title' placeholder='Reuired' value='<%= @song.title %>'>
+    </div>
+    <div>
+      <label for='url'>URL:</label>
+      <input type='text' id='url' name='url' placeholder='Optional' value='<%= @song.url %>'>
+    </div>
+    <footer>
+      <button type='submit'>Submit</button>
+    </footer>
+  </form> 
+</div>
+<div>
+  <% if @songs.blank? %>
+    <p> currently no songs on music wall </p> 
+  <% else %>
+    <% @songs.each do |song| %>
+      <div>
+        <p>Title: <%= song.title %></p>          
+        <% if song.url.blank? %>
+        <% else %>
+          <a href="<%= song.url %>">URL</a>
+        <% end %>
+        <p>Author: <%= song.author %></p>
+      </div>
+    <% end %>
+  <% end %>
+</div>
